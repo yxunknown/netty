@@ -52,8 +52,9 @@ public class MultiplexerTimeServer implements Runnable {
     @Override
     public void run() {
         while (!stop) {
+            System.out.println("sss");
             try {
-                //多路服务器轮询就绪key的时间间隔
+                //多路复用器轮询就绪key的时间间隔
                 selector.select(1000);
                 //多路复用器轮询就绪的key
                 Set<SelectionKey> selectionKeys = selector.selectedKeys();
