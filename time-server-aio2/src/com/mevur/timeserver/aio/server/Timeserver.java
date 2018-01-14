@@ -7,12 +7,12 @@
  * @author Mevur
  * @date 01/13/18 14:30
  */
-package com.mevur.timeserver.aio;
+package com.mevur.timeserver.aio.server;
 
 public class Timeserver {
     public static void main(String[] args) {
         int port = 8080;
-        AsyncTimeServerHandler timeServerHanlder = new AsyncTimeServerHandler(port);
-        new Thread(timeServerHanlder, "AIO-TIME-SERVER-001").start();
+        AsyncTimeServerHandler timeServerHandler = new AsyncTimeServerHandler(port);
+        new Thread(timeServerHandler, "AIO-TIME-SERVER-001").start();
     }
 }

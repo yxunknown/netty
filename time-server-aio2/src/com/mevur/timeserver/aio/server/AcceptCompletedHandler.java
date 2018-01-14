@@ -7,7 +7,7 @@
  * @author Mevur
  * @date 01/13/18 14:57
  */
-package com.mevur.timeserver.aio;
+package com.mevur.timeserver.aio.server;
 
 import java.nio.ByteBuffer;
 import java.nio.channels.AsynchronousSocketChannel;

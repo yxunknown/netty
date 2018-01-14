@@ -7,12 +7,10 @@
  * @author Mevur
  * @date 01/13/18 14:35
  */
-package com.mevur.timeserver.aio;
+package com.mevur.timeserver.aio.server;
 
 import java.net.InetSocketAddress;
 import java.nio.channels.AsynchronousServerSocketChannel;
-import java.nio.channels.AsynchronousSocketChannel;
-import java.nio.channels.CompletionHandler;
 import java.util.concurrent.CountDownLatch;
 
 public class AsyncTimeServerHandler implements Runnable {
@@ -24,7 +22,7 @@ public class AsyncTimeServerHandler implements Runnable {
         this.port = port;
         try {
             asynchronousServerSocketChannel = AsynchronousServerSocketChannel.open();
-            asynchronousServerSocketChannel.bind(new InetSocketAddress(port));
+            asynchronousServerSocketChannel.bind(new InetSocketAddress(this.port));
             System.out.println("The time server is running in port: " + port);
         } catch (Exception e) {
             e.printStackTrace();
@@ -33,6 +31,7 @@ public class AsyncTimeServerHandler implements Runnable {
 
     @Override
     public void run() {
+        //在完成一组正在执行的操作之前，允许当前的线程一直阻塞
         latch = new CountDownLatch(1);
         doAccept();
         try {
@@ -43,17 +42,6 @@ public class AsyncTimeServerHandler implements Runnable {
     }
 
     private void doAccept() {
-        asynchronousServerSocketChannel.accept(this, new CompletionHandler<AsynchronousSocketChannel, AsyncTimeServerHandler>() {
-            @Override
-            public void completed(AsynchronousSocketChannel result, AsyncTimeServerHandler attachment) {
-                attachment.asynchronousServerSocketChannel.accept(attachment, this);
-
-            }
-
-            @Override
-            public void failed(Throwable exc, AsyncTimeServerHandler attachment) {
-
-            }
-        });
+        asynchronousServerSocketChannel.accept(this, new AcceptCompletedHandler());
     }
 }

@@ -1,5 +1,5 @@
 /**
- * ReadCompletionHanlder.class
+ * ReadCompletionHandler.class
  * Created in Intelij IDEA
  * <p>
  * Write Some Describe of this class here
@@ -7,9 +7,7 @@
  * @author Mevur
  * @date 01/13/18 15:04
  */
-package com.mevur.timeserver.aio;
-
-import com.sun.org.apache.regexp.internal.RE;
+package com.mevur.timeserver.aio.server;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -18,12 +16,12 @@ import java.nio.channels.AsynchronousSocketChannel;
 import java.nio.channels.CompletionHandler;
 import java.util.Date;
 
-public class ReadCompletionHanlder implements CompletionHandler<Integer, ByteBuffer> {
+public class ReadCompletionHandler implements CompletionHandler<Integer, ByteBuffer> {
 
     private AsynchronousSocketChannel channel;
     public static final String CHARSET = "UTF-8";
 
-    public ReadCompletionHanlder(AsynchronousSocketChannel channel) {
+    public ReadCompletionHandler(AsynchronousSocketChannel channel) {
         if (null == this.channel) {
             this.channel = channel;
         }
@@ -45,11 +43,12 @@ public class ReadCompletionHanlder implements CompletionHandler<Integer, ByteBuf
     }
 
     private void doWrite(String currentTime) {
-        if (null != currentTime && currentTime.trim().length() > 0) {
+        if (null != currentTime && 0 < currentTime.trim().length()) {
             byte[] bytes = currentTime.getBytes();
             ByteBuffer writeBuffer = ByteBuffer.allocate(bytes.length);
             writeBuffer.put(bytes);
             writeBuffer.flip();
+
             channel.write(writeBuffer, writeBuffer, new CompletionHandler<Integer, ByteBuffer>() {
                 @Override
                 public void completed(Integer result, ByteBuffer attachment) {
