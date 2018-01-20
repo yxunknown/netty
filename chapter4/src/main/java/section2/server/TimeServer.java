@@ -1,4 +1,13 @@
-package server;
+/**
+ * TimeServer.class
+ * Created in Intelij IDEA
+ * <p>
+ * 解决TCP粘包和拆包问题
+ *
+ * @author Mevur
+ * @date 01/20/18 20:15
+ */
+package section2.server;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -8,19 +17,12 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-
-/**
- * server.TimeServer.class
- * Created in Intelij IDEA
- * <p>
- * Write Some Describe of this class here
- *
- * @author Mevur
- * @date 01/18/18 20:31
- */
+import io.netty.handler.codec.LineBasedFrameDecoder;
+import io.netty.handler.codec.string.StringDecoder;
 
 public class TimeServer {
     public void bind(int port) throws Exception {
+        //配置服务端的NIO线程模型
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {
@@ -29,9 +31,7 @@ public class TimeServer {
              .channel(NioServerSocketChannel.class)
              .option(ChannelOption.SO_BACKLOG, 1024)
              .childHandler(new ChildChannelHandler());
-            //绑定端口，同步等待成功
             ChannelFuture f = b.bind(port).sync();
-            //等待服务端监听端口关闭
             f.channel().closeFuture().sync();
         } finally {
             bossGroup.shutdownGracefully();
@@ -42,6 +42,8 @@ public class TimeServer {
     private class ChildChannelHandler extends ChannelInitializer<SocketChannel> {
         @Override
         protected void initChannel(SocketChannel socketChannel) throws Exception {
+            socketChannel.pipeline().addLast(new LineBasedFrameDecoder(1024));
+            socketChannel.pipeline().addLast(new StringDecoder());
             socketChannel.pipeline().addLast(new TimeServerHandler());
         }
     }

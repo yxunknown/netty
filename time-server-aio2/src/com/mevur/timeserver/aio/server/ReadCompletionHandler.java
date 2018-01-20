@@ -33,7 +33,7 @@ public class ReadCompletionHandler implements CompletionHandler<Integer, ByteBuf
         attachment.get(body);
         try {
             String reg = new String(body, CHARSET);
-            System.out.println("The time server receive order:" + reg);
+            System.out.println("The time section1.server receive order:" + reg);
             String currentTime = "QUERY TIME ORDER".equalsIgnoreCase(reg) ? getTime() :
                                  "BAD ORDER";
             doWrite(currentTime);
