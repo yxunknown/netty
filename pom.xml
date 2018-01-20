@@ -8,6 +8,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <modules>
         <module>nettydemo</module>
+        <module>chapter4</module>
     </modules>
     <packaging>pom</packaging>
 

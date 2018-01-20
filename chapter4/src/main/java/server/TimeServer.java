@@ -1,3 +1,5 @@
+package server;
+
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -8,7 +10,7 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 /**
- * TimeServer.class
+ * server.TimeServer.class
  * Created in Intelij IDEA
  * <p>
  * Write Some Describe of this class here
