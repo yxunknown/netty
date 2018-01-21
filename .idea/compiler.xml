@@ -7,11 +7,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="chapter4" />
+        <module name="chapter5" />
         <module name="nettydemo" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="chapter4" target="1.5" />
+      <module name="chapter5" target="1.5" />
       <module name="netty" target="1.5" />
       <module name="nettydemo" target="1.5" />
     </bytecodeTargetLevel>

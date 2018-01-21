@@ -9,6 +9,7 @@
     <modules>
         <module>nettydemo</module>
         <module>chapter4</module>
+        <module>chapter5</module>
     </modules>
     <packaging>pom</packaging>
 
